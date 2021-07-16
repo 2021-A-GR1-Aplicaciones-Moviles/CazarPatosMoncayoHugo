@@ -8,6 +8,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        editTextEmail.setText ( sharedPref.getString(LOGIN_KEY,"") )
+        editTextPassword.setText ( sharedPref.getString(PASSWORD_KEY,"") )
+
         //Inicialización de variables
         editTextEmail = findViewById(R.id.editTextEmail)
         editTextPassword = findViewById(R.id.editTextPassword)
@@ -24,6 +27,19 @@ class LoginActivity : AppCompatActivity() {
             val intencion = Intent(this, MainActivity::class.java)
             intencion.putExtra(EXTRA_LOGIN, email)
             startActivity(intencion)
+            if(checkBoxRecordarme.isChecked){
+                val editor = sharedPref.edit()
+                editor.putString(LOGIN_KEY,editTextEmail.text.toString())
+                editor.putString(PASSWORD_KEY,editTextPassword.text.toString())
+                editor.commit()
+            }
+            else{
+                val editor = sharedPref.edit()
+                editor.putString(LOGIN_KEY,"")
+                editor.putString(PASSWORD_KEY,"")
+                editor.commit()
+            }
+
         }
         buttonNewUser.setOnClickListener{
 
