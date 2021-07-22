@@ -14,7 +14,8 @@
         android:layout_height="100dp"
         app:srcCompat="@drawable/duck"
         tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="239dp" />
+        tools:layout_editor_absoluteY="239dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageViewContador"
@@ -65,6 +66,14 @@
         android:text="60s"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonRegresar"
+        android:layout_width="66dp"
+        android:layout_height="37dp"
+        app:icon="@android:drawable/ic_menu_revert"
+        tools:layout_editor_absoluteX="61dp"
+        tools:layout_editor_absoluteY="-7dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

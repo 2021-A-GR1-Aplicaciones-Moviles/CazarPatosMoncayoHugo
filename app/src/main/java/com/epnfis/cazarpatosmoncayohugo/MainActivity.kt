@@ -1,3 +1,5 @@
+package com.epnfis.cazarpatosmoncayohugo
+
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -5,6 +7,7 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import java.util.*
 
@@ -14,9 +17,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var textViewTiempo: TextView
     lateinit var imageViewPato: ImageView
     var contador = 0
-    var anchoPantalla = 0
-    var alturaPantalla = 0
-    var gameOver = false
+    var anchoPantalla=0
+    var alturaPantalla=0
+    var gameOver=false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,14 +35,11 @@ class MainActivity : AppCompatActivity() {
         val extras = intent.extras ?: return
         val usuario = extras.getString(EXTRA_LOGIN) ?:"Unknown"
         textViewUsuario.setText(usuario)
-
-        //Determina el ancho y largo de pantalla
         inicializarPantalla()
-        //Cuenta regresiva del juego
         inicializarCuentaRegresiva()
         //Evento clic sobre la imagen del pato
         imageViewPato.setOnClickListener {
-            if (gameOver) return@setOnClickListener
+            if(gameOver) return@setOnClickListener
             contador++
             MediaPlayer.create(this, R.raw.gunshot).start()
             textViewContador.setText(contador.toString())
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             }, 500)
         }
     }
+
     private fun inicializarPantalla() {
         // 1. Obtenemos el tamaño de la pantalla del dispositivo
         val display = this.resources.displayMetrics
@@ -61,13 +64,13 @@ class MainActivity : AppCompatActivity() {
         val maximoX = anchoPantalla - imageViewPato.getWidth()
         val maximoY = alturaPantalla - imageViewPato.getHeight()
         // Generamos 2 números aleatorios, para la coordenadas x , y
-        val randomX = Random().nextInt(maximoX - min + 1)
-        val randomY = Random().nextInt(maximoY - min + 1)
-
+        val randomX = Random().nextInt(maximoX-min)+1
+        val randomY = Random().nextInt(maximoY-min)+1
         // Utilizamos los números aleatorios para mover el pato a esa nueva posición
         imageViewPato.setX(randomX.toFloat())
         imageViewPato.setY(randomY.toFloat())
     }
+
     private fun inicializarCuentaRegresiva() {
         object : CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -81,6 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
         }.start()
     }
+
     private fun mostrarDialogoGameOver() {
         val builder = AlertDialog.Builder(this)
         builder
@@ -100,4 +104,6 @@ class MainActivity : AppCompatActivity() {
                 })
         builder.create().show()
     }
+
+    
 }
